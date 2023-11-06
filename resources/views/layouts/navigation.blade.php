@@ -18,6 +18,15 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('kelas.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-home') }}"></use>
+            </svg>
+            {{ __('Kelas') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('users.index') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>

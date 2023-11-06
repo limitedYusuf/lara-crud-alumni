@@ -30,4 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
     Route::resource('angkatan', \App\Http\Controllers\AngkatanController::class);
+
+    Route::resource('kelas', \App\Http\Controllers\KelasController::class);
 });
