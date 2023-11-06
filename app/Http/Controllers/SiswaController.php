@@ -68,6 +68,13 @@ class SiswaController extends Controller
         return view('siswa.show', compact('siswa'));
     }
 
+    public function search(Request $request)
+    {
+        $data = Siswa::where('id', $request->id)->firstOrFail();
+        
+        return view('siswa.show', compact('data'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

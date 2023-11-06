@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <form action="{{ route('siswa.search') }}" method="post">
                         @csrf
-                        <select name="alumni" id="select" class="form-select w-100" required>
+                        <select name="id" id="select" class="form-select w-100" required>
                             <option value="">-- Cari Data --</option>
                             @foreach ($siswa as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
