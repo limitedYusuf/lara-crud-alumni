@@ -1,29 +1,34 @@
 @extends('layouts.app')
 
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+@endpush
+
 @section('content')
     <div class="card mb-4">
         <div class="card-header">
             {{ __('Users') }}
         </div>
 
-        <div class="alert alert-info" role="alert">Sample table page</div>
+        <div class="alert alert-info" role="alert">Menampilkan akun yang terdaftar</div>
 
         <div class="card-body">
 
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach($users as $user)
-                    <tr>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->email }}</td>
-                    </tr>
-                @endforeach
+                    @foreach ($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -34,3 +39,13 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        new DataTable('.table');
+    </script>
+@endpush

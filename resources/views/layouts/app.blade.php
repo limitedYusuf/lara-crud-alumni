@@ -8,6 +8,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="theme-color" content="#ffffff">
     @vite('resources/sass/app.scss')
+    @stack('css')
 </head>
 <body>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
@@ -83,5 +84,6 @@
     </footer>
 </div>
 <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+@stack('js')
 </body>
 </html>
