@@ -33,5 +33,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('kelas', \App\Http\Controllers\KelasController::class);
 
+    Route::post('search', [\App\Http\Controllers\SiswaController::class, 'search'])->name('siswa.search');
     Route::resource('siswa', \App\Http\Controllers\SiswaController::class);
 });
