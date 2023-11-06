@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Models\Angkatan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class KelasController extends Controller
 {
@@ -48,7 +50,9 @@ class KelasController extends Controller
      */
     public function show(Kelas $kela)
     {
-        return view('kelas.show', compact('kela'));
+        $siswas = Siswa::where('kelas_id', $kela->id)->latest()->get();
+        
+        return view('kelas.show', compact('kela', 'siswas'));
     }
 
     /**

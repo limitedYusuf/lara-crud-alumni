@@ -76,7 +76,7 @@
                 @if (count($getKelas) > 0)
                     @foreach ($getKelas as $item2)
                         <li class="nav-item">
-                            <a class="nav-link" href="#" target="_top">
+                            <a class="nav-link" href="{{ route('kelas.show', $item2->id) }}" target="_top">
                                 <svg class="nav-icon">
                                     <use xlink:href="{{ asset('icons/coreui.svg#cil-bug') }}"></use>
                                 </svg>
