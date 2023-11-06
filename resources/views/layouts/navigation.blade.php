@@ -1,4 +1,6 @@
 <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
+    <li class="nav-title">Modul Utama</li>
+
     <li class="nav-item">
         <a class="nav-link" href="{{ route('home') }}">
             <svg class="nav-icon">
@@ -53,22 +55,37 @@
         </a>
     </li>
 
-    <li class="nav-group" aria-expanded="false">
-        <a class="nav-link nav-group-toggle" href="#">
-            <svg class="nav-icon">
-                <use xlink:href="{{ asset('icons/coreui.svg#cil-star') }}"></use>
-            </svg>
-            Two-level menu
-        </a>
-        <ul class="nav-group-items" style="height: 0px;">
-            <li class="nav-item">
-                <a class="nav-link" href="#" target="_top">
-                    <svg class="nav-icon">
-                        <use xlink:href="{{ asset('icons/coreui.svg#cil-bug') }}"></use>
-                    </svg>
-                    Child menu
-                </a>
-            </li>
-        </ul>
-    </li>
+    <li class="nav-title">Filter By Angkatan</li>
+    @php
+        $getAngkatan = \App\Models\Angkatan::orderBy('id', 'ASC')->get();
+    @endphp
+    @foreach ($getAngkatan as $item)
+        <li class="nav-group" aria-expanded="false">
+            <a class="nav-link nav-group-toggle" href="#">
+                <svg class="nav-icon">
+                    <use xlink:href="{{ asset('icons/coreui.svg#cil-map') }}"></use>
+                </svg>
+                {{ $item->name }}
+            </a>
+            @php
+                $getKelas = \App\Models\Kelas::where('angkatan_id', $item->id)
+                    ->orderBy('id', 'ASC')
+                    ->get();
+            @endphp
+            <ul class="nav-group-items" style="height: 0px;">
+                @if (count($getKelas) > 0)
+                    @foreach ($getKelas as $item2)
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" target="_top">
+                                <svg class="nav-icon">
+                                    <use xlink:href="{{ asset('icons/coreui.svg#cil-bug') }}"></use>
+                                </svg>
+                                {{ $item2->name }}
+                            </a>
+                        </li>
+                    @endforeach
+                @endif
+            </ul>
+        </li>
+    @endforeach
 </ul>
