@@ -2,7 +2,12 @@
 
 Membuat CRUD Simple dengan Laravel (By Request)
 
-Cara Install :
+#### Requirement :
+- [x] PHP 8
+- [x] MySQL
+- [x] Apache
+
+#### Cara Install :
 - Clone git ini
 - Buka terminal dan pastikan sudah berada di folder project
 - Ketik ```cp .env.example .env``` & enter
