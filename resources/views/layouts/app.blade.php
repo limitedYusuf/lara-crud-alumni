@@ -13,6 +13,14 @@
 
     @vite('resources/sass/app.scss')
     @stack('css')
+
+    <style>
+        .custombody {
+            background-image: url("{{ asset('images/bg_utk_dashboard.jpeg') }}") !important;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +34,7 @@
         @include('layouts.navigation')
         <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>
-    <div class="wrapper d-flex flex-column min-vh-100 bg-light">
+    <div class="wrapper d-flex flex-column min-vh-100 bg-light {{ Route::has('home') == true ? 'custombody' : '' }}">
         <header class="header header-sticky mb-4">
             <div class="container-fluid">
                 <button class="header-toggler px-md-0 me-md-3" type="button"
