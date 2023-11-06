@@ -8,6 +8,14 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="theme-color" content="#ffffff">
     @vite('resources/sass/app.scss')
+
+    <style>
+        body, .bg-light {
+            background-image: url("{{ asset('images/bg_utk_index.png') }}") !important;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 <body>
 
