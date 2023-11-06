@@ -9,6 +9,15 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('angkatan.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-calendar') }}"></use>
+            </svg>
+            {{ __('Angkatan') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('users.index') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>
