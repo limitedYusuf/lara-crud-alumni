@@ -39,6 +39,21 @@
                     </form>
                 </div>
             </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 style="margin-bottom: 0px !important;"><b>TOTAL ALUMNI KESELURUHAN :
+                            {{ number_format($countSiswa, 0, '.', '.') }}</b></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">
+                    <div id="chart"></div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
@@ -50,11 +65,77 @@
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
+        integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         $(document).ready(function() {
             $('#select').select2({
                 theme: 'bootstrap-5'
             });
-        })
+
+            var data = @json($data);
+
+            if (data && data.length > 0) {
+                var categories = data.map(function(item) {
+                    return item.name;
+                });
+
+                var seriesData = data.map(function(item) {
+                    return item.count;
+                });
+
+                var options = {
+                    series: [{
+                        name: 'Jumlah Siswa',
+                        data: seriesData,
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded',
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent'],
+                    },
+                    xaxis: {
+                        categories: categories,
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Jumlah Siswa',
+                        },
+                    },
+                    fill: {
+                        opacity: 1,
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function(val) {
+                                return val;
+                            },
+                        },
+                    },
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+            } else {
+                console.error('Data is empty or undefined.');
+            }
+
+        });
     </script>
 @endpush
