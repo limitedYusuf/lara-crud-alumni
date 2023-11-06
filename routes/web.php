@@ -32,4 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('angkatan', \App\Http\Controllers\AngkatanController::class);
 
     Route::resource('kelas', \App\Http\Controllers\KelasController::class);
+
+    Route::resource('siswa', \App\Http\Controllers\SiswaController::class);
 });

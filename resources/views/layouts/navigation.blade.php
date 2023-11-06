@@ -27,6 +27,15 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('siswa.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-star') }}"></use>
+            </svg>
+            {{ __('Siswa') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('users.index') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>
