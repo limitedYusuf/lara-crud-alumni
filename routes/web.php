@@ -17,11 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// ADMIN AUTH
+Route::group(['middleware' => ['guest'], 'prefix' => 'admin'], function () {
+    Auth::routes();
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// ADMIN PAGE
+Route::group(['middleware' => ['auth:web'], 'prefix' => 'admin'], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->group(function () {
     Route::view('about', 'about')->name('about');
 
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
@@ -34,5 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('kelas', \App\Http\Controllers\KelasController::class);
 
     Route::post('search', [\App\Http\Controllers\SiswaController::class, 'search'])->name('siswa.search');
+    
     Route::resource('siswa', \App\Http\Controllers\SiswaController::class);
 });
