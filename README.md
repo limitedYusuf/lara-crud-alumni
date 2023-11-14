@@ -25,3 +25,6 @@ Auth login?
 Cek data di tabel ```users``` di database kemudian pilih salah satu email (bebas)
 
 Password : ```123```
+
+- URL Admin : ```http://127.0.0.1:8000/admin/login```
+- URL Alumni : ```http://127.0.0.1:8000/alumni/login```
