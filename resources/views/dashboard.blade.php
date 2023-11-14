@@ -27,12 +27,12 @@
                     Cari Alumni Berdasarkan Nama
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('siswa.search') }}" method="post">
-                        @csrf
-                        <select name="id" id="select" class="form-select w-100" required>
+                    <form action="{{ route('alumni.dashboard') }}" method="get">
+                        <select name="code" id="select" class="form-select w-100" required>
                             <option value="">-- Cari Data --</option>
                             @foreach ($siswa as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <option value="{{ $item->id }}" {{ request()->code == $item->id ? 'selected' : '' }}>
+                                    {{ $item->name }}</option>
                             @endforeach
                         </select>
                         <div class="d-flex justify-content-center mt-2">
@@ -41,6 +41,45 @@
                     </form>
                 </div>
             </div>
+
+            @if (!empty(request()->code))
+                @php
+                    $detail = \App\Models\Siswa::where('id', request()->code)->first();
+                @endphp
+                <div class="card mb-4">
+                    <div class="card-body">
+                        @if ($detail)
+                            <h5 class="text-center"><b>DETAIL ALUMNI</b></h5>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <b>FOTO</b><br>
+                                    <img src="{{ Storage::url('siswa_foto/' . $detail->foto) }}" width="200px"
+                                        alt="">
+                                </li>
+                                <li class="list-group-item">
+                                    <b>NAMA</b><br>
+                                    <span>{{ $detail->name }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>ANGKATAN</b><br>
+                                    <span>{{ $detail->angkatan->name }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>KELAS</b><br>
+                                    <span>{{ $detail->kelas->name }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Akun IG (Sosmed)</b><br>
+                                    <span><a href="{{ $detail->link }}" target="_blank">{{ $detail->link }}</a></span>
+                                </li>
+                            </ul>
+                        @else
+                            <h5 class="text-center text-danger" style="margin-bottom: 0px !important;"><b>TIDAK ADA
+                                    DATA...</b></h5>
+                        @endif
+                    </div>
+                </div>
+            @endif
 
             <div class="card mb-4">
                 <div class="card-body">
