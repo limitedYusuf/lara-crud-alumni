@@ -18,6 +18,10 @@
             background-size: cover;
             background-repeat: no-repeat;
         }
+
+        .invalid-feedback {
+            display: block !important;
+        }
     </style>
 </head>
 <body>

@@ -17,6 +17,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// ALUMNI AUTH
+Route::group(['prefix' => 'alumni', 'as' => 'alumni.'], function () {
+    Route::get('login', [\App\Http\Controllers\AlumniController::class, 'showLoginForm'])->name('login');
+
+    Route::post('login', [\App\Http\Controllers\AlumniController::class, 'login']);
+
+    Route::get('register', [\App\Http\Controllers\AlumniController::class, 'showRegisterForm'])->name('register');
+
+    Route::post('register', [\App\Http\Controllers\AlumniController::class, 'register']);
+    
+    Route::post('logout', [\App\Http\Controllers\AlumniController::class, 'logout'])->name('logout');
+});
+
 // ADMIN AUTH
 Route::group(['middleware' => ['guest'], 'prefix' => 'admin'], function () {
     Auth::routes();

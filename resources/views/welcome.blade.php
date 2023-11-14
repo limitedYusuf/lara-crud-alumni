@@ -28,7 +28,7 @@
         <div class="center-content">
             <h1>{{ config('app.name', 'Laravel') }}</h1>
             <p>This is the welcome page.</p>
-            <a href="{{ route('login') }}" class="btn btn-primary btn-lg">LOGIN</a>
+            <a href="{{ route('alumni.login') }}" class="btn btn-primary btn-lg">LOGIN</a>
         </div>
     </div>
 
