@@ -6,6 +6,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 @endpush
 
 @section('content')
@@ -96,25 +98,125 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12 mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="nav nav-pills nav-justified">
+                        @foreach ($angkatans as $key => $item)
+                            <li class="nav-item">
+                                <a class="nav-link {{ $key == 0 ? 'active' : '' }}" id="{{ Str::slug($item->id) }}"
+                                    data-bs-toggle="pill"
+                                    href="#content{{ $item->id }}"><b>{{ $item->name }}</b></a>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    <div class="tab-content mt-2">
+                        @foreach ($angkatans as $key => $item)
+                            <div class="tab-pane fade {{ $key == 0 ? 'show active' : '' }}"
+                                id="content{{ $item->id }}">
+                                <div class="accordion mt-4" id="accordionExample">
+                                    @php
+                                        $kelasData = \App\Models\Kelas::where('angkatan_id', $item->id)
+                                            ->orderBy('id', 'ASC')
+                                            ->get();
+                                    @endphp
+
+                                    @forelse ($kelasData as $keyKelas => $itemKelas)
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading{{ $keyKelas }}">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ $keyKelas }}"
+                                                    aria-expanded="false" aria-controls="collapse{{ $keyKelas }}">
+                                                    {{ $itemKelas->name }}
+                                                </button>
+                                            </h2>
+                                            <div id="collapse{{ $keyKelas }}" class="accordion-collapse collapse"
+                                                aria-labelledby="heading{{ $keyKelas }}"
+                                                data-bs-parent="#accordionExample">
+                                                @php
+                                                    $listAlumni = \App\Models\Siswa::with(['angkatan', 'kelas'])
+                                                        ->where('kelas_id', $itemKelas->id)
+                                                        ->orderBy('name', 'ASC')
+                                                        ->get();
+                                                @endphp
+
+                                                <div class="accordion-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">ID</th>
+                                                                    <th scope="col">Foto</th>
+                                                                    <th scope="col">Name</th>
+                                                                    <th scope="col">Angkatan</th>
+                                                                    <th scope="col">Kelas</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($listAlumni as $siswaData)
+                                                                    <tr>
+                                                                        <td>{{ $loop->iteration }}</td>
+                                                                        <td><img src="{{ Storage::url('siswa_foto/' . $siswaData->foto) }}"
+                                                                                width="150px" alt="">
+                                                                        </td>
+                                                                        <td>{{ $siswaData->name }}</td>
+                                                                        <td>{{ $siswaData->angkatan->name }}</td>
+                                                                        <td>{{ $siswaData->kelas->name }}</td>
+                                                                        <td>
+                                                                            <div class="d-flex">
+                                                                                <a href="{{ $siswaData->link }}"
+                                                                                    target="_blank"
+                                                                                    class="btn btn-secondary"
+                                                                                    style="margin-right: 10px;">Akun IG</a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <h5 class="text-center text-danger mt-4" style="margin-bottom: 0px !important;">
+                                            <b>TIDAK ADA
+                                                DATA...</b></h5>
+                                    @endforelse
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
         integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
     <script>
         $(document).ready(function() {
             $('#select').select2({
                 theme: 'bootstrap-5'
             });
+
+            new DataTable('.table');
 
             var data = @json($data);
 
