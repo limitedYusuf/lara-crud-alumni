@@ -18,7 +18,17 @@
                     {{ __('Dashboard') }}
                 </div>
                 <div class="card-body">
-                    Selamat Datang <b>{{ auth()->user()->name }}</b>
+                    <div class="d-flex justify-content-between">
+                        <div class="left">
+                            Selamat Datang <b>{{ auth()->user()->name }}</b>
+                        </div>
+                        <div class="right">
+                            <form action="{{ route('alumni.logout') }}" method="post">
+                                @csrf
+                                <button type="submit" onclick="return confirm('Yakin ingin logout?')" class="btn btn-danger btn-sm">Keluar</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
