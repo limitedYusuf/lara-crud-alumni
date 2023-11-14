@@ -16,6 +16,7 @@ Membuat CRUD Simple dengan Laravel (By Request)
 - Ketik ```npm run build``` & enter
 - Buka file ```.env``` kemudian sesuaikan ```DB_DATABASE, DB_USERNAME, DB_PASSWORD``` sesuai server anda
 - Ketik ```php artisan migrate:fresh --seed``` & enter
+- Ketik ```php artisan storage:link``` & enter
 - Ketik ```php artisan serve```
 
 Normal nya url ```http://127.0.0.1:8000``` sudah bisa diakses di browser
