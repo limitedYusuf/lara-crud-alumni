@@ -90,11 +90,11 @@
             </div>
         </div>
         <footer class="footer">
-            <div><a href="https://coreui.io">CoreUI </a><a href="https://coreui.io">Bootstrap Admin Template</a> &copy;
-                2021
-                creativeLabs.
+            <div><a href="https://coreui.io">CoreUI </a><a href="https://coreui.io">BS5 Template</a> &copy;
+                {{ date('Y') }}
+                Your Name.
             </div>
-            <div class="ms-auto">Powered by&nbsp;<a href="https://coreui.io/bootstrap/ui-components/">CoreUI UI
+            <div class="ms-auto">Powered by&nbsp;<a href="https://coreui.io/bootstrap/ui-components/">SMA Pelita Tiga
                     Components</a></div>
         </footer>
     </div>

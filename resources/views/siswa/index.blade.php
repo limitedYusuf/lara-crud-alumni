@@ -8,10 +8,10 @@
 @section('content')
     <div class="card mb-4">
         <div class="card-header">
-            List Siswa
+            List Alumni
         </div>
 
-        <div class="alert alert-info" role="alert">Menampilkan data siswa</div>
+        <div class="alert alert-info" role="alert">Menampilkan data alumni</div>
         @if ($message = Session::get('success'))
             <div class="alert alert-success" role="alert">{{ $message }}</div>
         @endif

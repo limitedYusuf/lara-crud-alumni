@@ -7,7 +7,7 @@
 
         <div class="card">
             <div class="card-header">
-                Edit Siswa
+                Edit Alumni
             </div>
 
             <div class="card-body">
@@ -39,13 +39,13 @@
                 </div>
 
                 <div class="input mb-3">
-                    <label for="">Nama Siswa</label>
+                    <label for="">Nama Alumni</label>
                     <input class="form-control @error('name') is-invalid @enderror" type="text" name="name"
                         value="{{ $siswa->name }}" required>
                 </div>
 
                 <div class="input mb-3">
-                    <label for="">Foto Siswa (Opsional)</label>
+                    <label for="">Foto Alumni (Opsional)</label>
                     <input class="form-control @error('foto') is-invalid @enderror" type="file" name="foto">
                 </div>
 

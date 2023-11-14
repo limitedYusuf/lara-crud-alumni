@@ -115,7 +115,7 @@
                     },
                     yaxis: {
                         title: {
-                            text: 'Jumlah Siswa',
+                            text: 'Jumlah Alumni',
                         },
                     },
                     fill: {

@@ -6,7 +6,7 @@
 
         <div class="card">
             <div class="card-header">
-                Add Siswa
+                Add Alumni
             </div>
 
             <div class="card-body">
@@ -36,12 +36,12 @@
                 </div>
 
                 <div class="input mb-3">
-                    <label for="">Nama Siswa</label>
+                    <label for="">Nama Alumni</label>
                     <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" required>
                 </div>
 
                 <div class="input mb-3">
-                    <label for="">Foto Siswa</label>
+                    <label for="">Foto Alumni</label>
                     <input class="form-control @error('foto') is-invalid @enderror" type="file" name="foto" required>
                 </div>
 
