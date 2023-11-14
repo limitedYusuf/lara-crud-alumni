@@ -53,4 +53,6 @@ Route::group(['middleware' => ['auth:web'], 'prefix' => 'admin'], function () {
     Route::post('search', [\App\Http\Controllers\SiswaController::class, 'search'])->name('siswa.search');
     
     Route::resource('siswa', \App\Http\Controllers\SiswaController::class);
+
+    Route::resource('akun', \App\Http\Controllers\AkunController::class);
 });

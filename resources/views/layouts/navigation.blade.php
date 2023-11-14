@@ -33,7 +33,16 @@
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-star') }}"></use>
             </svg>
-            {{ __('Siswa') }}
+            {{ __('Alumni') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('akun.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-people') }}"></use>
+            </svg>
+            {{ __('Akun Alumni') }}
         </a>
     </li>
 
@@ -42,7 +51,7 @@
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>
             </svg>
-            {{ __('Users') }}
+            {{ __('Akun Admin') }}
         </a>
     </li>
 
