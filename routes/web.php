@@ -30,8 +30,13 @@ Route::group(['prefix' => 'alumni', 'as' => 'alumni.'], function () {
     Route::post('logout', [\App\Http\Controllers\AlumniController::class, 'logout'])->name('logout');
 });
 
+// ALUMNI PAGE
+Route::group(['middleware' => ['auth:alumni'], 'prefix' =>'alumni', 'as' => 'alumni.'], function () {
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+});
+
 // ADMIN AUTH
-Route::group(['middleware' => ['guest'], 'prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin'], function () {
     Auth::routes();
 });
 

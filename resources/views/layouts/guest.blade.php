@@ -23,6 +23,7 @@
             display: block !important;
         }
     </style>
+    @stack('css')
 </head>
 <body>
 
@@ -34,5 +35,6 @@
     </div>
 </div>
 <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+@stack('js')
 </body>
 </html>
