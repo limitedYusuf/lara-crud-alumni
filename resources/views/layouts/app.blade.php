@@ -8,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="theme-color" content="#ffffff">
-    <link rel="icon" href="{{ asset('images/logo_apk.jpeg') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('images/logo_apk.jpeg') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('images/logonew.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('images/logonew.png') }}" type="image/x-icon">
 
     @vite('resources/sass/app.scss')
     @stack('css')
@@ -30,9 +30,9 @@
 <body>
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div class="sidebar-brand d-none d-md-flex">
-            <img class="sidebar-brand-full" width="118px" height="46px" src="{{ asset('images/logo_apk.jpeg') }}"
+            <img class="sidebar-brand-full" width="118px" height="46px" src="{{ asset('images/logonew.png') }}"
                 alt="">
-            <img class="sidebar-brand-narrow" width="46" height="46" src="{{ asset('images/logo_apk.jpeg') }}"
+            <img class="sidebar-brand-narrow" width="46" height="46" src="{{ asset('images/logonew.png') }}"
                 alt="">
         </div>
         @include('layouts.navigation')
@@ -48,7 +48,7 @@
                     </svg>
                 </button>
                 <a class="header-brand d-md-none" href="#">
-                    <img width="118px" height="46px" src="{{ asset('images/logo_apk.jpeg') }}" alt="">
+                    <img width="118px" height="46px" src="{{ asset('images/logonew.png') }}" alt="">
                 </a>
                 <ul class="header-nav d-none d-md-flex">
                     <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Dashboard</a></li>
