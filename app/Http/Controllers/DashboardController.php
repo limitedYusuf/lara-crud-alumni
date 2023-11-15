@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use App\Models\Angkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 
 class DashboardController extends Controller
 {
@@ -26,5 +27,19 @@ class DashboardController extends Controller
         }
 
         return view('dashboard', compact('siswa', 'countSiswa', 'data', 'angkatans'));
+    }
+
+    public function postComment(Request $request)
+    {
+        $request->validate([
+            'comment' => 'required'
+        ]);
+
+        $post = new Contact();
+        $post->comment = $request->comment;
+        $post->alumni_id = auth()->user()->id;
+        $post->save();
+
+        return redirect()->back()->with('success', 'Komentar telah dikirim..');
     }
 }

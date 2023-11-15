@@ -18,6 +18,16 @@
                     {{ __('Dashboard') }}
                 </div>
                 <div class="card-body">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-warning">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="d-flex justify-content-between">
                         <div class="left">
                             Selamat Datang <b>{{ auth()->user()->name }}</b>
@@ -97,6 +107,19 @@
                 <div class="card-body">
                     <h5 style="margin-bottom: 0px !important;"><b>TOTAL ALUMNI KESELURUHAN :
                             {{ number_format($countSiswa, 0, '.', '.') }}</b></h5>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h6 class="text-center"><b>AJUKAN UBAH / HAPUS / TAMBAH INFO ALUMNI</b></h6>
+                    <form action="{{ route('alumni.postComment') }}" method="post">
+                        @csrf
+                        <textarea name="comment" class="w-100 form-control" placeholder="Ketik disini..." required id="" rows="4"></textarea>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-success fw-bold">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -33,6 +33,8 @@ Route::group(['prefix' => 'alumni', 'as' => 'alumni.'], function () {
 // ALUMNI PAGE
 Route::group(['middleware' => ['auth:alumni'], 'prefix' =>'alumni', 'as' => 'alumni.'], function () {
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+
+    Route::post('postComment', [\App\Http\Controllers\DashboardController::class, 'postComment'])->name('postComment');
 });
 
 // ADMIN AUTH
