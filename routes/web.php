@@ -46,6 +46,8 @@ Route::group(['prefix' => 'admin'], function () {
 Route::group(['middleware' => ['auth:web'], 'prefix' => 'admin'], function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    Route::get('/pengajuan', [App\Http\Controllers\HomeController::class, 'pengajuan'])->name('pengajuan');
+
     Route::view('about', 'about')->name('about');
 
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');

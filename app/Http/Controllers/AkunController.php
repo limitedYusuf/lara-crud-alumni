@@ -13,7 +13,7 @@ class AkunController extends Controller
      */
     public function index()
     {
-        $alumnis = Alumni::paginate();
+        $alumnis = Alumni::latest()->get();
 
         return view('alumni.index', compact('alumnis'));
     }

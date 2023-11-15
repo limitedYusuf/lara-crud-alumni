@@ -6,6 +6,7 @@ use App\Models\Siswa;
 use App\Models\Angkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 
 class HomeController extends Controller
 {
@@ -41,5 +42,12 @@ class HomeController extends Controller
         }
         
         return view('home', compact('siswa', 'countSiswa', 'data'));
+    }
+
+    public function pengajuan()
+    {
+        $contacts = Contact::with(['alumni'])->latest()->get();
+
+        return view('pengajuan', compact('contacts'));
     }
 }

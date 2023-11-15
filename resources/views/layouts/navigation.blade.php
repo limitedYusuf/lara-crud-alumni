@@ -56,6 +56,15 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('pengajuan') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-bullhorn') }}"></use>
+            </svg>
+            {{ __('Pengajuan') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('about') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-info') }}"></use>
