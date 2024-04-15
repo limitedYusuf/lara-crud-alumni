@@ -51,8 +51,16 @@ class KelasController extends Controller
     public function show(Kelas $kela)
     {
         $siswas = Siswa::where('kelas_id', $kela->id)->latest()->get();
+
+        $kuliah    = Siswa::where('kelas_id', $kela->id)->where('dikti', '!=', null)->count();
+        $gakKuliah = Siswa::where('kelas_id', $kela->id)->whereNull('dikti')->count();
+
+        $rekap = [
+            "Lanjut Kuliah"                => $kuliah,
+            "Tidak Melanjutkan Pendidikan" => $gakKuliah,
+        ];
         
-        return view('kelas.show', compact('kela', 'siswas'));
+        return view('kelas.show', compact('kela', 'siswas', 'rekap'));
     }
 
     /**

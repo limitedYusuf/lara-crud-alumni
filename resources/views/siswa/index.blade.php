@@ -30,6 +30,7 @@
                         <th scope="col">Angkatan</th>
                         <th scope="col">Kelas</th>
                         <th scope="col">Kelahiran</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -44,17 +45,28 @@
                             <td>{{ $siswa->kelas->name }}</td>
                             <td>{{ $siswa->kelahiran }}</td>
                             <td>
+                                @if (isset($siswa->dikti))
+                                    <span class="badge bg-primary text-uppercase">Lanjut Kuliah</span>
+                                @else
+                                    <span class="badge bg-danger text-uppercase">Tidak Lanjut</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="d-flex">
-                                    <a href="{{ $siswa->link }}" target="_blank" class="btn btn-secondary"
-                                        style="margin-right: 10px;">IG</a>
-                                    <a href="{{ route('siswa.edit', $siswa->id) }}" class="btn btn-warning"
-                                        style="margin-right: 10px;">Edit</a>
-                                    <form action="{{ route('siswa.destroy', $siswa->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button onclick="return confirm('Yakin ingin menghapus data?')" type="submit"
-                                            class="btn btn-danger">Hapus</button>
-                                    </form>
+                                    <div class="btn-group">
+                                        @if (isset($siswa->dikti))
+                                            <a href="{{ $siswa->dikti }}" target="_blank"
+                                                class="btn btn-primary">PDDikti</a>
+                                        @endif
+                                        <a href="{{ $siswa->link }}" target="_blank" class="btn btn-secondary">IG</a>
+                                        <a href="{{ route('siswa.edit', $siswa->id) }}" class="btn btn-warning">Edit</a>
+                                        <form action="{{ route('siswa.destroy', $siswa->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button onclick="return confirm('Yakin ingin menghapus data?')" type="submit"
+                                                class="btn btn-danger" style="border-radius: 0px !important;">Hapus</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

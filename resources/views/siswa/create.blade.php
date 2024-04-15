@@ -51,9 +51,14 @@
                         required>
                 </div>
 
-                <div class="input">
+                <div class="input mb-3">
                     <label for="">Link IG</label>
                     <input class="form-control @error('link') is-invalid @enderror" type="url" name="link" required>
+                </div>
+
+                <div class="input">
+                    <label for="">Link Dikti Siswa (https://pddikti.kemdikbud.go.id/)<br><p class="text-danger">Jika tidak terdaftar, kosongkan saja!</p></label>
+                    <input class="form-control @error('dikti') is-invalid @enderror" type="url" name="dikti">
                 </div>
 
             </div>

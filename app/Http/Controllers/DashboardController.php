@@ -26,7 +26,15 @@ class DashboardController extends Controller
             ];
         }
 
-        return view('dashboard', compact('siswa', 'countSiswa', 'data', 'angkatans'));
+        $kuliah    = Siswa::where('dikti', '!=', null)->count();
+        $gakKuliah = Siswa::whereNull('dikti')->count();
+
+        $rekap = [
+            "Lanjut Kuliah"                => $kuliah,
+            "Tidak Melanjutkan Pendidikan" => $gakKuliah,
+        ];
+
+        return view('dashboard', compact('siswa', 'countSiswa', 'data', 'angkatans', 'rekap'));
     }
 
     public function postComment(Request $request)

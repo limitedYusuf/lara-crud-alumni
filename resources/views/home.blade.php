@@ -6,6 +6,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
+        integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endpush
 
 @section('content')
@@ -46,12 +50,67 @@
                             {{ number_format($countSiswa, 0, '.', '.') }}</b></h5>
                 </div>
             </div>
+
+            @forelse ($angkatans as $key => $item)
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h4><b>{{ $item->name }}</b></h4>
+                        <div class="d-flex justify-content-center mb-2">
+                            <div id="chartAngkatan{{ $key }}"></div>
+                        </div>
+
+                        @php
+                            $rekapAngkatan = [
+                                'Lanjut Kuliah' => \App\Models\Siswa::where('angkatan_id', $item->id)
+                                    ->where('dikti', '!=', null)
+                                    ->count(),
+                                'Tidak Melanjutkan Pendidikan' => \App\Models\Siswa::where('angkatan_id', $item->id)
+                                    ->whereNull('dikti')
+                                    ->count(),
+                            ];
+                        @endphp
+
+                        <script>
+                            var optionsAngkatan = {
+                                chart: {
+                                    width: 400,
+                                    type: 'pie',
+                                },
+                                series: Object.values(@json($rekapAngkatan)),
+                                labels: Object.keys(@json($rekapAngkatan)),
+                                colors: ['#66a3ff', '#ff6666'],
+                                legend: {
+                                    position: 'bottom',
+                                },
+                            };
+
+                            var chartAngkatan = new ApexCharts(document.querySelector("#chartAngkatan{{ $key }}"), optionsAngkatan);
+
+                            chartAngkatan.render();
+                        </script>
+                    </div>
+                </div>
+            @empty
+            @endforelse
         </div>
 
         <div class="col-md-7">
-            <div class="card">
-                <div class="card-body">
-                    <div id="chart"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>REKAP INFO ALUMNI SETELAH LULUS</b></h4>
+                            <div id="chart2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,10 +122,6 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
-        integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
@@ -136,6 +191,22 @@
                 console.error('Data is empty or undefined.');
             }
 
+            let rekap = @json($rekap);
+
+            var options2 = {
+                chart: {
+                    type: 'pie',
+                },
+                series: Object.values(rekap),
+                labels: Object.keys(rekap),
+                colors: ['#66a3ff', '#ff6666'],
+                legend: {
+                    position: 'bottom',
+                },
+            };
+
+            var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+            chart2.render();
         });
     </script>
 @endpush

@@ -8,6 +8,10 @@
         href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
+        integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endpush
 
 @section('content')
@@ -35,7 +39,8 @@
                         <div class="right">
                             <form action="{{ route('alumni.logout') }}" method="post">
                                 @csrf
-                                <button type="submit" onclick="return confirm('Yakin ingin logout?')" class="btn btn-danger btn-sm">Keluar</button>
+                                <button type="submit" onclick="return confirm('Yakin ingin logout?')"
+                                    class="btn btn-danger btn-sm">Keluar</button>
                             </form>
                         </div>
                     </div>
@@ -79,6 +84,18 @@
                                         alt="">
                                 </li>
                                 <li class="list-group-item">
+                                    <b>STATUS PENDIDIKAN LANJUTAN (KULIAH)</b><br>
+                                    @if (isset($detail->dikti))
+                                        <div class="d-flex justify-content-between">
+                                            <span class="badge bg-primary text-uppercase">Lanjut Kuliah</span>
+                                            <br>
+                                            <a href="{{ $detail->dikti }}" target="_blank">Lihat PDDikti</a>
+                                        </div>
+                                    @else
+                                        <span class="badge bg-danger text-uppercase">Tidak Lanjut</span>
+                                    @endif
+                                </li>
+                                <li class="list-group-item">
                                     <b>NAMA</b><br>
                                     <span>{{ $detail->name }}</span>
                                 </li>
@@ -115,7 +132,8 @@
                     <h6 class="text-center"><b>AJUKAN UBAH / HAPUS / TAMBAH INFO ALUMNI</b></h6>
                     <form action="{{ route('alumni.postComment') }}" method="post">
                         @csrf
-                        <textarea name="comment" class="w-100 form-control" placeholder="Ketik disini..." required id="" rows="4"></textarea>
+                        <textarea name="comment" class="w-100 form-control" placeholder="Ketik disini..." required id=""
+                            rows="4"></textarea>
                         <div class="d-flex justify-content-end mt-2">
                             <button type="submit" class="btn btn-success fw-bold">Submit</button>
                         </div>
@@ -125,9 +143,22 @@
         </div>
 
         <div class="col-md-7">
-            <div class="card">
-                <div class="card-body">
-                    <div id="chart"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="chart"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4><b>REKAP INFO ALUMNI SETELAH LULUS</b></h4>
+                            <div id="chart2"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,17 +187,58 @@
                                             ->get();
                                     @endphp
 
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div id="chartAngkatan{{ $key }}"></div>
+                                    </div>
+
+                                    @php
+                                        $rekapAngkatan = [
+                                            'Lanjut Kuliah' => \App\Models\Siswa::where('angkatan_id', $item->id)
+                                                ->where('dikti', '!=', null)
+                                                ->count(),
+                                            'Tidak Melanjutkan Pendidikan' => \App\Models\Siswa::where(
+                                                'angkatan_id',
+                                                $item->id,
+                                            )
+                                                ->whereNull('dikti')
+                                                ->count(),
+                                        ];
+                                    @endphp
+
+                                    <script>
+                                        var optionsAngkatan = {
+                                            chart: {
+                                                width: 400,
+                                                type: 'pie',
+                                            },
+                                            series: Object.values(@json($rekapAngkatan)),
+                                            labels: Object.keys(@json($rekapAngkatan)),
+                                            colors: ['#66a3ff', '#ff6666'],
+                                            legend: {
+                                                position: 'bottom',
+                                            },
+                                        };
+
+                                        var chartAngkatan = new ApexCharts(document.querySelector("#chartAngkatan{{ $key }}"), optionsAngkatan);
+
+                                        chartAngkatan.render();
+                                    </script>
+
                                     @forelse ($kelasData as $keyKelas => $itemKelas)
                                         <div class="accordion-item">
-                                            <h2 class="accordion-header" id="heading{{ $keyKelas }}">
+                                            <h2 class="accordion-header"
+                                                id="heading{{ $key }}{{ $keyKelas }}">
                                                 <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ $keyKelas }}"
-                                                    aria-expanded="false" aria-controls="collapse{{ $keyKelas }}">
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#collapse{{ $key }}{{ $keyKelas }}"
+                                                    aria-expanded="false"
+                                                    aria-controls="collapse{{ $key }}{{ $keyKelas }}">
                                                     {{ $itemKelas->name }}
                                                 </button>
                                             </h2>
-                                            <div id="collapse{{ $keyKelas }}" class="accordion-collapse collapse"
-                                                aria-labelledby="heading{{ $keyKelas }}"
+                                            <div id="collapse{{ $key }}{{ $keyKelas }}"
+                                                class="accordion-collapse collapse"
+                                                aria-labelledby="heading{{ $key }}{{ $keyKelas }}"
                                                 data-bs-parent="#accordionExample">
                                                 @php
                                                     $listAlumni = \App\Models\Siswa::with(['angkatan', 'kelas'])
@@ -176,6 +248,49 @@
                                                 @endphp
 
                                                 <div class="accordion-body">
+                                                    <div class="d-flex justify-content-center mb-2">
+                                                        <div id="chartKelas{{ $key }}{{ $keyKelas }}"></div>
+                                                    </div>
+
+                                                    @php
+                                                        $rekapKelas = [
+                                                            'Lanjut Kuliah' => \App\Models\Siswa::where(
+                                                                'angkatan_id',
+                                                                $item->id,
+                                                            )
+                                                                ->where('kelas_id', $itemKelas->id)
+                                                                ->where('dikti', '!=', null)
+                                                                ->count(),
+                                                            'Tidak Melanjutkan Pendidikan' => \App\Models\Siswa::where(
+                                                                'angkatan_id',
+                                                                $item->id,
+                                                            )
+                                                                ->where('kelas_id', $itemKelas->id)
+                                                                ->whereNull('dikti')
+                                                                ->count(),
+                                                        ];
+                                                    @endphp
+
+                                                    <script>
+                                                        var optionsKelas = {
+                                                            chart: {
+                                                                width: 350,
+                                                                type: 'pie',
+                                                            },
+                                                            series: Object.values(@json($rekapKelas)),
+                                                            labels: Object.keys(@json($rekapKelas)),
+                                                            colors: ['#66a3ff', '#ff6666'],
+                                                            legend: {
+                                                                position: 'bottom',
+                                                            },
+                                                        };
+
+                                                        var chartKelas = new ApexCharts(document.querySelector("#chartKelas{{ $key }}{{ $keyKelas }}"),
+                                                            optionsKelas);
+
+                                                        chartKelas.render();
+                                                    </script>
+
                                                     <div class="table-responsive">
                                                         <table class="table">
                                                             <thead>
@@ -185,6 +300,7 @@
                                                                     <th scope="col">Name</th>
                                                                     <th scope="col">Angkatan</th>
                                                                     <th scope="col">Kelas</th>
+                                                                    <th scope="col">Status</th>
                                                                     <th scope="col">Action</th>
                                                                 </tr>
                                                             </thead>
@@ -198,12 +314,30 @@
                                                                         <td>{{ $siswaData->name }}</td>
                                                                         <td>{{ $siswaData->angkatan->name }}</td>
                                                                         <td>{{ $siswaData->kelas->name }}</td>
+
+                                                                        <td>
+                                                                            @if (isset($siswaData->dikti))
+                                                                                <span
+                                                                                    class="badge bg-primary text-uppercase">Lanjut
+                                                                                    Kuliah</span>
+                                                                            @else
+                                                                                <span
+                                                                                    class="badge bg-danger text-uppercase">Tidak
+                                                                                    Lanjut</span>
+                                                                            @endif
+                                                                        </td>
                                                                         <td>
                                                                             <div class="d-flex">
+                                                                                @if (isset($siswaData->dikti))
+                                                                                    <a href="{{ $siswaData->dikti }}"
+                                                                                        target="_blank"
+                                                                                        class="btn btn-primary"
+                                                                                        style="margin-left: 10px;">PDDikti</a>
+                                                                                @endif
                                                                                 <a href="{{ $siswaData->link }}"
                                                                                     target="_blank"
                                                                                     class="btn btn-secondary"
-                                                                                    style="margin-right: 10px;">Akun IG</a>
+                                                                                    style="margin-left: 10px;">Akun IG</a>
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -217,7 +351,8 @@
                                     @empty
                                         <h5 class="text-center text-danger mt-4" style="margin-bottom: 0px !important;">
                                             <b>TIDAK ADA
-                                                DATA...</b></h5>
+                                                DATA...</b>
+                                        </h5>
                                     @endforelse
                                 </div>
                             </div>
@@ -236,9 +371,6 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
         integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.44.0/apexcharts.min.js"
-        integrity="sha512-9ktqS1nS/L6/PPv4S4FdD2+guYGmKF+5DzxRKYkS/fV5gR0tXoDaLqqQ6V93NlTj6ITsanjwVWZ3xe6YkObIQQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -311,6 +443,23 @@
             } else {
                 console.error('Data is empty or undefined.');
             }
+
+            let rekap = @json($rekap);
+
+            var options2 = {
+                chart: {
+                    type: 'pie',
+                },
+                series: Object.values(rekap),
+                labels: Object.keys(rekap),
+                colors: ['#66a3ff', '#ff6666'],
+                legend: {
+                    position: 'bottom',
+                },
+            };
+
+            var chart2 = new ApexCharts(document.querySelector("#chart2"), options2);
+            chart2.render();
 
         });
     </script>

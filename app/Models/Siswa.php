@@ -20,6 +20,7 @@ class Siswa extends Model
         'foto',
         'kelahiran',
         'link',
+        'dikti'
     ];
 
     public function angkatan()

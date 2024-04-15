@@ -40,8 +40,16 @@ class HomeController extends Controller
                 'count' => $count,
             ];
         }
+
+        $kuliah    = Siswa::where('dikti', '!=', null)->count();
+        $gakKuliah = Siswa::whereNull('dikti')->count();
+
+        $rekap = [
+            "Lanjut Kuliah"                => $kuliah,
+            "Tidak Melanjutkan Pendidikan" => $gakKuliah,
+        ];
         
-        return view('home', compact('siswa', 'countSiswa', 'data'));
+        return view('home', compact('siswa', 'countSiswa', 'data', 'rekap', 'angkatans'));
     }
 
     public function pengajuan()
